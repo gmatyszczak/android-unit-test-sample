@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="news"
+            type="pl.gmat.news.feature.main.News" />
+
+        <variable
+            name="viewModel"
+            type="pl.gmat.news.feature.main.MainViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?listPreferredItemHeight"
+        android:background="?selectableItemBackground"
+        android:onClick="@{() -> viewModel.onNewsClicked(news)}">
+
+        <TextView
+            android:textAppearance="?textAppearanceSubtitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{news.title}"
+            tools:text="Test news" />
+
+    </FrameLayout>
+
+</layout>

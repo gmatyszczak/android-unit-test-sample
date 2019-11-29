@@ -6,7 +6,6 @@ import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -39,8 +38,6 @@ class NewsRepositoryImplTest {
     @InjectMocks
     private lateinit var repository: NewsRepositoryImpl
 
-    private val testDispatcher = TestCoroutineDispatcher()
-
     private val news = News(1, "title", "body")
     private val newsEntity = NewsEntity(1, "title", "body")
 
@@ -49,21 +46,21 @@ class NewsRepositoryImplTest {
         whenever(newsServiceMock.loadNews()).thenReturn(listOf(news))
         whenever(mapperMock.toNewsEntity(news)).thenReturn(newsEntity)
 
-        assertEquals(Result.Success(listOf(news)), repository.refreshNews())
+        assertEquals(Result.Success<Nothing>(), repository.refreshNews())
         verify(newsDaoMock).insert(listOf(newsEntity))
     }
 
     @Test
     fun `when failure on refresh news`() = runBlockingTest {
-        val throwable = HttpException(
+        val error = HttpException(
             Response.error<List<News>>(
                 404,
-                ResponseBody.create(MediaType.get("text/plain"), "text")
+                ResponseBody.create(MediaType.get("text/plain"), "error")
             )
         )
-        whenever(newsServiceMock.loadNews()).thenThrow(throwable)
+        whenever(newsServiceMock.loadNews()).thenThrow(error)
 
-        assertEquals(Result.Failure(throwable), repository.refreshNews())
+        assertEquals(Result.Failure(error), repository.refreshNews())
         verifyZeroInteractions(newsDaoMock)
         verifyZeroInteractions(mapperMock)
     }

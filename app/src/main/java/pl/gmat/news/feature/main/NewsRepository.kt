@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 interface NewsRepository {
 
-    suspend fun refreshNews(): Result<List<News>>
+    suspend fun refreshNews(): Result<Nothing>
     fun loadNews(): Flow<List<News>>
 }
 
@@ -20,14 +20,15 @@ class NewsRepositoryImpl @Inject constructor(
     private val mapper: NewsMapper
 ) : NewsRepository {
 
-    override suspend fun refreshNews(): Result<List<News>> {
-        val result = apiCall { newsService.loadNews() }
-        if (result is Result.Success<List<News>>) {
-            val news = result.data ?: emptyList()
-            newsDao.insert(news.map { mapper.toNewsEntity(it) })
+    override suspend fun refreshNews() =
+        when (val result = apiCall { newsService.loadNews() }) {
+            is Result.Success<List<News>> -> {
+                val news = result.data ?: emptyList()
+                newsDao.insert(news.map { mapper.toNewsEntity(it) })
+                Result.Success<Nothing>()
+            }
+            is Result.Failure -> result
         }
-        return result
-    }
 
     override fun loadNews() =
         newsDao.loadAll().map { newsEntities ->

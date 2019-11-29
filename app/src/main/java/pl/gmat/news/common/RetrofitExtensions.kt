@@ -1,6 +1,6 @@
 package pl.gmat.news.common
 
-suspend fun <T : Any> apiCall(request: suspend () -> T) =
+inline fun <T : Any> apiCall(request: () -> T) =
     try {
         Result.Success(request())
     } catch (e: Exception) {

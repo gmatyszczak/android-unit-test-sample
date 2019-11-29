@@ -4,8 +4,6 @@ import dagger.Module
 import dagger.Provides
 import pl.gmat.news.database.AppDatabase
 import pl.gmat.news.di.ScreenScope
-import pl.gmat.news.feature.news.NewsMapper
-import pl.gmat.news.feature.news.NewsMapperImpl
 import pl.gmat.news.feature.news.NewsRepository
 import pl.gmat.news.feature.news.NewsRepositoryImpl
 import pl.gmat.news.feature.news.api.NewsService
@@ -27,8 +25,4 @@ class NewsModule {
     @ScreenScope
     @Provides
     fun provideNewsDao(database: AppDatabase): NewsDao = database.newsDao()
-
-    @ScreenScope
-    @Provides
-    fun provideNewsMapper(mapper: NewsMapperImpl): NewsMapper = mapper
 }

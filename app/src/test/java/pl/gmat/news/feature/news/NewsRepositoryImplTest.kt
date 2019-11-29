@@ -18,7 +18,6 @@ import org.mockito.junit.MockitoJUnitRunner
 import pl.gmat.news.common.Result
 import pl.gmat.news.feature.news.api.NewsService
 import pl.gmat.news.feature.news.dao.NewsDao
-import pl.gmat.news.feature.news.dao.NewsEntity
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -32,22 +31,17 @@ class NewsRepositoryImplTest {
     @Mock
     private lateinit var newsDaoMock: NewsDao
 
-    @Mock
-    private lateinit var mapperMock: NewsMapper
-
     @InjectMocks
     private lateinit var repository: NewsRepositoryImpl
 
     private val news = News(1, "title", "body")
-    private val newsEntity = NewsEntity(1, "title", "body")
 
     @Test
     fun `when success on refresh news`() = runBlockingTest {
         whenever(newsServiceMock.loadNews()).thenReturn(listOf(news))
-        whenever(mapperMock.toNewsEntity(news)).thenReturn(newsEntity)
 
         assertEquals(Result.Success<Nothing>(), repository.refreshNews())
-        verify(newsDaoMock).insert(listOf(newsEntity))
+        verify(newsDaoMock).insert(listOf(news))
     }
 
     @Test
@@ -62,13 +56,11 @@ class NewsRepositoryImplTest {
 
         assertEquals(Result.Failure(error), repository.refreshNews())
         verifyZeroInteractions(newsDaoMock)
-        verifyZeroInteractions(mapperMock)
     }
 
     @Test
     fun `on load news`() = runBlockingTest {
-        val flow = flowOf(listOf(newsEntity))
-        whenever(mapperMock.toNews(newsEntity)).thenReturn(news)
+        val flow = flowOf(listOf(news))
         whenever(newsDaoMock.loadAll()).thenReturn(flow)
 
         repository.loadNews().collect {

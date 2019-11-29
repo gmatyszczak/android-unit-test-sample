@@ -98,7 +98,7 @@ class NewsViewModelTest {
             verify(stateObserverMock).onChanged(NewsState(news = listOf(news), isLoading = true))
             verify(stateObserverMock).onChanged(NewsState(news = listOf(news)))
         }
-        verify(effectObserverMock).onChanged(NewsEffect.ShowRefreshError(error))
+        verify(effectObserverMock).onChanged(NewsEffect.ShowRefreshError)
         verifyNoMoreInteractions(stateObserverMock)
         verifyNoMoreInteractions(effectObserverMock)
     }

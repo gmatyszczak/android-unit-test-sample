@@ -2,12 +2,12 @@ package pl.gmat.news.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import pl.gmat.news.feature.news.News
 import pl.gmat.news.feature.news.dao.NewsDao
-import pl.gmat.news.feature.news.dao.NewsEntity
 
 @Database(
     entities = [
-        NewsEntity::class
+        News::class
     ],
     version = 1
 )

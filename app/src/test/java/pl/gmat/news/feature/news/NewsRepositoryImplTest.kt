@@ -1,4 +1,4 @@
-package pl.gmat.news.feature.main
+package pl.gmat.news.feature.news
 
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyZeroInteractions
@@ -16,9 +16,9 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import pl.gmat.news.common.Result
-import pl.gmat.news.feature.main.api.NewsService
-import pl.gmat.news.feature.main.dao.NewsDao
-import pl.gmat.news.feature.main.dao.NewsEntity
+import pl.gmat.news.feature.news.api.NewsService
+import pl.gmat.news.feature.news.dao.NewsDao
+import pl.gmat.news.feature.news.dao.NewsEntity
 import retrofit2.HttpException
 import retrofit2.Response
 

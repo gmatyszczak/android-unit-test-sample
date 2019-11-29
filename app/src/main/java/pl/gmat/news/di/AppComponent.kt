@@ -3,7 +3,7 @@ package pl.gmat.news.di
 import dagger.BindsInstance
 import dagger.Component
 import pl.gmat.news.NewsApp
-import pl.gmat.news.feature.main.di.MainComponent
+import pl.gmat.news.feature.news.di.NewsComponent
 import javax.inject.Singleton
 
 @Singleton
@@ -21,5 +21,5 @@ interface AppComponent {
 
     fun inject(application: NewsApp)
 
-    fun mainComponentFactory(): MainComponent.Factory
+    fun newsComponentFactory(): NewsComponent.Factory
 }

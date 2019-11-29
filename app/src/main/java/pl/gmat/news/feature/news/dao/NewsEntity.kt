@@ -1,4 +1,4 @@
-package pl.gmat.news.feature.main.dao
+package pl.gmat.news.feature.news.dao
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

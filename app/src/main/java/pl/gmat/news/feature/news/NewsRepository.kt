@@ -1,11 +1,11 @@
-package pl.gmat.news.feature.main
+package pl.gmat.news.feature.news
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import pl.gmat.news.common.Result
 import pl.gmat.news.common.apiCall
-import pl.gmat.news.feature.main.api.NewsService
-import pl.gmat.news.feature.main.dao.NewsDao
+import pl.gmat.news.feature.news.api.NewsService
+import pl.gmat.news.feature.news.dao.NewsDao
 import javax.inject.Inject
 
 interface NewsRepository {

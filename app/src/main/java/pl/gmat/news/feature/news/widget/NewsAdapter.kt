@@ -1,12 +1,12 @@
-package pl.gmat.news.feature.main.widget
+package pl.gmat.news.feature.news.widget
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import pl.gmat.news.databinding.ItemNewsBinding
-import pl.gmat.news.feature.main.MainViewModel
-import pl.gmat.news.feature.main.News
+import pl.gmat.news.feature.news.News
+import pl.gmat.news.feature.news.NewsViewModel
 
 private val diffUtil = object : DiffUtil.ItemCallback<News>() {
     override fun areItemsTheSame(oldItem: News, newItem: News) = oldItem.id == newItem.id
@@ -15,7 +15,7 @@ private val diffUtil = object : DiffUtil.ItemCallback<News>() {
 }
 
 class NewsAdapter(
-    private val viewModel: MainViewModel
+    private val viewModel: NewsViewModel
 ) :
     ListAdapter<News, NewsViewHolder>(diffUtil) {
 

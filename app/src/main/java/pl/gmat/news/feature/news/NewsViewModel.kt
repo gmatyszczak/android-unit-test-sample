@@ -1,4 +1,4 @@
-package pl.gmat.news.feature.main
+package pl.gmat.news.feature.news
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,14 +10,14 @@ import pl.gmat.news.common.Result
 import pl.gmat.news.common.SingleLiveEvent
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class NewsViewModel @Inject constructor(
     private val repository: NewsRepository
 ) : ViewModel() {
 
-    val state = MutableLiveData<MainState>()
-    val effect = SingleLiveEvent<MainEffect>()
+    val state = MutableLiveData<NewsState>()
+    val effect = SingleLiveEvent<NewsEffect>()
     private val currentState
-        get() = state.value ?: MainState()
+        get() = state.value ?: NewsState()
 
     init {
         viewModelScope.loadNews()
@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(
 
     private fun CoroutineScope.loadNews() = launch {
         repository.loadNews().collect {
-            state.value = (currentState.copy(news = it))
+            state.value = currentState.copy(news = it)
         }
     }
 
@@ -34,7 +34,7 @@ class MainViewModel @Inject constructor(
         state.value = currentState.copy(isLoading = true)
         val result = repository.refreshNews()
         if (result is Result.Failure) {
-            effect.value = MainEffect.ShowRefreshError(result.error)
+            effect.value = NewsEffect.ShowRefreshError(result.error)
         }
         state.value = currentState.copy(isLoading = false)
     }
@@ -42,6 +42,6 @@ class MainViewModel @Inject constructor(
     fun onNewsRefresh() = viewModelScope.refreshNews()
 
     fun onNewsClicked(news: News) {
-        effect.value = MainEffect.ShowNews(news.id)
+        effect.value = NewsEffect.ShowNews(news.id)
     }
 }

@@ -1,4 +1,4 @@
-package pl.gmat.news.feature.main
+package pl.gmat.news.feature.news
 
 data class News(
     val id: Int,

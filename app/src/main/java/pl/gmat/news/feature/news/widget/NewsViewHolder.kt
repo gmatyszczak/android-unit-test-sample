@@ -1,13 +1,13 @@
-package pl.gmat.news.feature.main.widget
+package pl.gmat.news.feature.news.widget
 
 import androidx.recyclerview.widget.RecyclerView
 import pl.gmat.news.databinding.ItemNewsBinding
-import pl.gmat.news.feature.main.MainViewModel
-import pl.gmat.news.feature.main.News
+import pl.gmat.news.feature.news.News
+import pl.gmat.news.feature.news.NewsViewModel
 
 class NewsViewHolder(
     private val binding: ItemNewsBinding,
-    private val viewModel: MainViewModel
+    private val viewModel: NewsViewModel
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(news: News) {

@@ -6,11 +6,11 @@
 
         <variable
             name="news"
-            type="pl.gmat.news.feature.main.News" />
+            type="pl.gmat.news.feature.news.News" />
 
         <variable
             name="viewModel"
-            type="pl.gmat.news.feature.main.MainViewModel" />
+            type="pl.gmat.news.feature.news.NewsViewModel" />
     </data>
 
     <FrameLayout

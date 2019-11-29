@@ -1,6 +1,6 @@
-package pl.gmat.news.feature.main
+package pl.gmat.news.feature.news
 
-import pl.gmat.news.feature.main.dao.NewsEntity
+import pl.gmat.news.feature.news.dao.NewsEntity
 import javax.inject.Inject
 
 interface NewsMapper {

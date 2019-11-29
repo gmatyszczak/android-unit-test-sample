@@ -5,10 +5,11 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import pl.gmat.news.NewsApp
-import pl.gmat.news.common.DispatcherProvider
-import pl.gmat.news.common.DispatcherProviderImpl
+import pl.gmat.news.common.SchedulerProvider
+import pl.gmat.news.common.SchedulerProviderImpl
 import pl.gmat.news.database.AppDatabase
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -21,6 +22,7 @@ class AppModule {
         Retrofit.Builder()
             .baseUrl("https://jsonplaceholder.typicode.com/")
             .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
     @Provides
@@ -30,5 +32,5 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideDispatcherProvider(provider: DispatcherProviderImpl): DispatcherProvider = provider
+    fun provideSchedulerProvider(provider: SchedulerProviderImpl): SchedulerProvider = provider
 }

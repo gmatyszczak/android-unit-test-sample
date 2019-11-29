@@ -5,21 +5,15 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.whenever
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
+import io.reactivex.Completable
+import io.reactivex.Flowable
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import pl.gmat.news.common.DispatcherProvider
 
-@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
 
@@ -30,31 +24,25 @@ class MainViewModelTest {
     private lateinit var repositoryMock: NewsRepository
 
     @Mock
-    private lateinit var dispatcherProviderMock: DispatcherProvider
-
-    @Mock
     private lateinit var stateObserverMock: Observer<MainState>
 
     private lateinit var viewModel: MainViewModel
 
-    private val testDispatcher = TestCoroutineDispatcher()
     private val news = News(1, "title", "body")
 
-    @Before
-    fun setup() {
-        val newsFlow = flowOf(listOf(news)).flowOn(testDispatcher)
-        whenever(dispatcherProviderMock.main()).thenReturn(testDispatcher)
-        whenever(dispatcherProviderMock.io()).thenReturn(testDispatcher)
-        whenever(repositoryMock.loadNews()).thenReturn(newsFlow)
-
-        viewModel = MainViewModel(repositoryMock, dispatcherProviderMock)
-        viewModel.state.observeForever(stateObserverMock)
-    }
-
     @Test
-    fun `on init`() = testDispatcher.runBlockingTest {
+    fun `on init`() {
+        createViewModel()
 
         verify(stateObserverMock).onChanged(MainState(news = listOf(news)))
         verifyNoMoreInteractions(stateObserverMock)
+    }
+
+    private fun createViewModel() {
+        whenever(repositoryMock.loadNews()).thenReturn(Flowable.just(listOf(news)))
+        whenever(repositoryMock.refreshNews()).thenReturn(Completable.complete())
+
+        viewModel = MainViewModel(repositoryMock)
+        viewModel.state.observeForever(stateObserverMock)
     }
 }

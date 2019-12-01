@@ -47,7 +47,7 @@ class NewsViewModelTest {
     fun setup() = runBlockingTest {
         Dispatchers.setMain(testDispatcher)
         whenever(repositoryMock.loadNews()).thenReturn(flowOf(listOf(news)))
-        whenever(repositoryMock.refreshNews()).thenReturn(Result.Success())
+        whenever(repositoryMock.refreshNews()).thenReturn(Result.Success(listOf(news)))
         viewModel = NewsViewModel(repositoryMock)
         viewModel.state.observeForever(stateObserverMock)
         viewModel.effect.observeForever(effectObserverMock)

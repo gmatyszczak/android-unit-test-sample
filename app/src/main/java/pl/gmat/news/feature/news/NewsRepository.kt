@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 interface NewsRepository {
 
-    suspend fun refreshNews(): Result<Nothing>
+    suspend fun refreshNews(): Result<List<News>>
     fun loadNews(): Flow<List<News>>
 }
 
@@ -22,8 +22,8 @@ class NewsRepositoryImpl @Inject constructor(
     override suspend fun refreshNews() =
         when (val result = apiCall { newsService.loadAllNews() }) {
             is Result.Success<List<News>> -> {
-                newsDao.insert(result.data ?: emptyList())
-                Result.Success<Nothing>()
+                newsDao.insert(result.data)
+                result
             }
             is Result.Failure -> result
         }

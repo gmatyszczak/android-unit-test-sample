@@ -38,7 +38,7 @@ class NewsRepositoryImplTest {
     fun `when success on refresh news`() = runBlockingTest {
         whenever(newsServiceMock.loadAllNews()).thenReturn(listOf(news))
 
-        assertEquals(Result.Success<Nothing>(), repository.refreshNews())
+        assertEquals(Result.Success(listOf(news)), repository.refreshNews())
         verify(newsDaoMock).insert(listOf(news))
     }
 

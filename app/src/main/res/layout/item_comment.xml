@@ -9,9 +9,13 @@
             type="pl.gmat.news.common.model.Comment" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?listPreferredItemHeight">
+        android:layout_height="wrap_content"
+        android:minHeight="?listPreferredItemHeight"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,12 +23,23 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:text="@{comment.body}"
             android:textAppearance="?textAppearanceBody2"
             tools:text="Test news" />
 
-    </FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{comment.email}"
+            android:textAppearance="?textAppearanceBody2"
+            android:textStyle="bold"
+            tools:text="Test news" />
+
+
+    </LinearLayout>
 
 </layout>

@@ -2,6 +2,7 @@ package pl.gmat.news.feature.details
 
 import android.content.Context
 import android.content.Intent
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import pl.gmat.news.R
 import pl.gmat.news.common.feature.BaseActivity
@@ -32,6 +33,12 @@ class NewsDetailsActivity :
         commentsRecyclerView.apply {
             adapter = CommentsAdapter()
             layoutManager = LinearLayoutManager(this@NewsDetailsActivity)
+            addItemDecoration(
+                DividerItemDecoration(
+                    this@NewsDetailsActivity,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
         }
     }
 

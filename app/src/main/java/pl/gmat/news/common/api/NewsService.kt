@@ -10,9 +10,6 @@ interface NewsService {
     @GET("/posts")
     suspend fun loadAllNews(): List<News>
 
-    @GET("/posts/{id}")
-    suspend fun loadNews(@Path("id") id: Int): News
-
     @GET("/posts/{id}/comments")
     suspend fun loadComments(@Path("id") id: Int): List<Comment>
 }

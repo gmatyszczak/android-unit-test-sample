@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import pl.gmat.news.NewsApp
+import pl.gmat.news.common.api.NewsService
 import pl.gmat.news.database.AppDatabase
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -25,4 +26,9 @@ class AppModule {
     @Singleton
     fun provideDatabase(application: NewsApp): AppDatabase =
         Room.databaseBuilder(application, AppDatabase::class.java, "appDatabase.db").build()
+
+    @Provides
+    @Singleton
+    fun provideNewsService(retrofit: Retrofit): NewsService =
+        retrofit.create(NewsService::class.java)
 }

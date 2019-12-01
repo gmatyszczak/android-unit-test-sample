@@ -38,6 +38,6 @@ class NewsViewModel @Inject constructor(
     fun onNewsRefresh() = viewModelScope.refreshNews()
 
     fun onNewsClicked(news: News) {
-        effect.value = NewsEffect.ShowNews(news.id)
+        effect.value = NewsEffect.ShowNewsDetails(news)
     }
 }

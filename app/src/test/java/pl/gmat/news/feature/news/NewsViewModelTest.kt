@@ -10,8 +10,6 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
-import okhttp3.MediaType
-import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -21,9 +19,8 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import pl.gmat.news.common.Result
-import pl.gmat.news.common.model.News
-import retrofit2.HttpException
-import retrofit2.Response
+import pl.gmat.news.feature.testError
+import pl.gmat.news.feature.testNews
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -44,7 +41,7 @@ class NewsViewModelTest {
     private lateinit var viewModel: NewsViewModel
 
     private val testDispatcher = TestCoroutineDispatcher()
-    private val news = News(1, "title", "body")
+    private val news = testNews()
 
     @Before
     fun setup() = runBlockingTest {
@@ -84,12 +81,7 @@ class NewsViewModelTest {
 
     @Test
     fun `when is failure on refresh news`() = runBlockingTest {
-        val error = HttpException(
-            Response.error<List<News>>(
-                404,
-                ResponseBody.create(MediaType.get("text/plain"), "error")
-            )
-        )
+        val error = testError()
         whenever(repositoryMock.refreshNews()).thenReturn(Result.Failure(error))
 
         viewModel.onNewsRefresh()
@@ -109,7 +101,7 @@ class NewsViewModelTest {
         viewModel.onNewsClicked(news)
 
         verify(stateObserverMock).onChanged(NewsState(news = listOf(news)))
-        verify(effectObserverMock).onChanged(NewsEffect.ShowNews(news.id))
+        verify(effectObserverMock).onChanged(NewsEffect.ShowNewsDetails(news))
         verifyNoMoreInteractions(effectObserverMock)
         verifyNoMoreInteractions(stateObserverMock)
     }

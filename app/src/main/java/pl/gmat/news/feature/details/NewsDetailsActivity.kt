@@ -2,16 +2,24 @@ package pl.gmat.news.feature.details
 
 import android.content.Context
 import android.content.Intent
+import androidx.recyclerview.widget.LinearLayoutManager
 import pl.gmat.news.R
 import pl.gmat.news.common.feature.BaseActivity
+import pl.gmat.news.common.model.News
 import pl.gmat.news.databinding.ActivityNewsDetailsBinding
 import pl.gmat.news.di.AppComponent
+import pl.gmat.news.feature.details.widget.CommentsAdapter
 
 class NewsDetailsActivity :
     BaseActivity<ActivityNewsDetailsBinding, NewsDetailsState, NewsDetailsEffect, NewsDetailsViewModel>() {
 
     companion object {
-        fun createIntent(context: Context) = Intent(context, NewsDetailsActivity::class.java)
+        const val EXTRA_NEWS = "EXTRA_NEWS"
+
+        fun createIntent(context: Context, news: News) =
+            Intent(context, NewsDetailsActivity::class.java).apply {
+                putExtra(EXTRA_NEWS, news)
+            }
     }
 
     override val viewModelClass = NewsDetailsViewModel::class.java
@@ -21,6 +29,10 @@ class NewsDetailsActivity :
         state = this@NewsDetailsActivity.viewModel.state
         viewModel = this@NewsDetailsActivity.viewModel
         lifecycleOwner = this@NewsDetailsActivity
+        commentsRecyclerView.apply {
+            adapter = CommentsAdapter()
+            layoutManager = LinearLayoutManager(this@NewsDetailsActivity)
+        }
     }
 
     override fun inject(appComponent: AppComponent) =

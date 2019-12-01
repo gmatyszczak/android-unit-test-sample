@@ -7,8 +7,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import okhttp3.MediaType
-import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,8 +17,7 @@ import pl.gmat.news.common.Result
 import pl.gmat.news.common.api.NewsService
 import pl.gmat.news.common.dao.NewsDao
 import pl.gmat.news.common.model.News
-import retrofit2.HttpException
-import retrofit2.Response
+import pl.gmat.news.feature.testError
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -47,12 +44,7 @@ class NewsRepositoryImplTest {
 
     @Test
     fun `when failure on refresh news`() = runBlockingTest {
-        val error = HttpException(
-            Response.error<List<News>>(
-                404,
-                ResponseBody.create(MediaType.get("text/plain"), "error")
-            )
-        )
+        val error = testError()
         whenever(newsServiceMock.loadAllNews()).thenThrow(error)
 
         assertEquals(Result.Failure(error), repository.refreshNews())

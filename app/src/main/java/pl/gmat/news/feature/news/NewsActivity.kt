@@ -28,7 +28,7 @@ class NewsActivity : BaseActivity<ActivityNewsBinding, NewsState, NewsEffect, Ne
         appComponent.newsComponentFactory().create(this).inject(this)
 
     override fun handleEffect(effect: NewsEffect) = when (effect) {
-        is NewsEffect.ShowNews -> startActivity(NewsDetailsActivity.createIntent(this))
+        is NewsEffect.ShowNewsDetails -> startActivity(NewsDetailsActivity.createIntent(this, effect.news))
         is NewsEffect.ShowRefreshError -> showErrorSnackBar()
     }
 

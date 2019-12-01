@@ -6,6 +6,7 @@ import pl.gmat.news.R
 import pl.gmat.news.common.feature.BaseActivity
 import pl.gmat.news.databinding.ActivityNewsBinding
 import pl.gmat.news.di.AppComponent
+import pl.gmat.news.feature.details.NewsDetailsActivity
 import pl.gmat.news.feature.news.widget.NewsAdapter
 
 class NewsActivity : BaseActivity<ActivityNewsBinding, NewsState, NewsEffect, NewsViewModel>() {
@@ -27,7 +28,7 @@ class NewsActivity : BaseActivity<ActivityNewsBinding, NewsState, NewsEffect, Ne
         appComponent.newsComponentFactory().create(this).inject(this)
 
     override fun handleEffect(effect: NewsEffect) = when (effect) {
-        is NewsEffect.ShowNews -> Unit
+        is NewsEffect.ShowNews -> startActivity(NewsDetailsActivity.createIntent(this))
         is NewsEffect.ShowRefreshError -> showErrorSnackBar()
     }
 

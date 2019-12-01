@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="androidx.lifecycle.LiveData" />
+
+        <import type="pl.gmat.news.feature.details.NewsDetailsState" />
+
+        <variable
+            name="state"
+            type="LiveData&lt;NewsDetailsState>" />
+
+        <variable
+            name="viewModel"
+            type="pl.gmat.news.feature.details.NewsDetailsViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+</layout>

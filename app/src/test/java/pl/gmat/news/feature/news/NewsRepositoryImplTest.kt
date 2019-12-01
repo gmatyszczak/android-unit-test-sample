@@ -16,8 +16,9 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import pl.gmat.news.common.Result
-import pl.gmat.news.feature.news.api.NewsService
-import pl.gmat.news.feature.news.dao.NewsDao
+import pl.gmat.news.common.api.NewsService
+import pl.gmat.news.common.dao.NewsDao
+import pl.gmat.news.common.model.News
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -38,7 +39,7 @@ class NewsRepositoryImplTest {
 
     @Test
     fun `when success on refresh news`() = runBlockingTest {
-        whenever(newsServiceMock.loadNews()).thenReturn(listOf(news))
+        whenever(newsServiceMock.loadAllNews()).thenReturn(listOf(news))
 
         assertEquals(Result.Success<Nothing>(), repository.refreshNews())
         verify(newsDaoMock).insert(listOf(news))
@@ -52,7 +53,7 @@ class NewsRepositoryImplTest {
                 ResponseBody.create(MediaType.get("text/plain"), "error")
             )
         )
-        whenever(newsServiceMock.loadNews()).thenThrow(error)
+        whenever(newsServiceMock.loadAllNews()).thenThrow(error)
 
         assertEquals(Result.Failure(error), repository.refreshNews())
         verifyZeroInteractions(newsDaoMock)

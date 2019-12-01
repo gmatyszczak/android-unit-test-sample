@@ -1,4 +1,4 @@
-package pl.gmat.news.feature.news
+package pl.gmat.news.common.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

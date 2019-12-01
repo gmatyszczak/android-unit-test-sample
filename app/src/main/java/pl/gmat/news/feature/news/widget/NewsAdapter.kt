@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import pl.gmat.news.common.model.News
 import pl.gmat.news.databinding.ItemNewsBinding
-import pl.gmat.news.feature.news.News
 import pl.gmat.news.feature.news.NewsViewModel
 
 private val diffUtil = object : DiffUtil.ItemCallback<News>() {

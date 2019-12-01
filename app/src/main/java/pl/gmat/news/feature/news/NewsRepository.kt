@@ -2,9 +2,10 @@ package pl.gmat.news.feature.news
 
 import kotlinx.coroutines.flow.Flow
 import pl.gmat.news.common.Result
+import pl.gmat.news.common.api.NewsService
 import pl.gmat.news.common.apiCall
-import pl.gmat.news.feature.news.api.NewsService
-import pl.gmat.news.feature.news.dao.NewsDao
+import pl.gmat.news.common.dao.NewsDao
+import pl.gmat.news.common.model.News
 import javax.inject.Inject
 
 interface NewsRepository {
@@ -19,7 +20,7 @@ class NewsRepositoryImpl @Inject constructor(
 ) : NewsRepository {
 
     override suspend fun refreshNews() =
-        when (val result = apiCall { newsService.loadNews() }) {
+        when (val result = apiCall { newsService.loadAllNews() }) {
             is Result.Success<List<News>> -> {
                 newsDao.insert(result.data ?: emptyList())
                 Result.Success<Nothing>()

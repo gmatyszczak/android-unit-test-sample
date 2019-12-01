@@ -21,6 +21,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import pl.gmat.news.common.Result
+import pl.gmat.news.common.model.News
 import retrofit2.HttpException
 import retrofit2.Response
 

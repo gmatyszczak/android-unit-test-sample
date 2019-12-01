@@ -6,7 +6,7 @@
 
         <variable
             name="news"
-            type="pl.gmat.news.feature.news.News" />
+            type="pl.gmat.news.common.model.News" />
 
         <variable
             name="viewModel"

@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import pl.gmat.news.common.Result
 import pl.gmat.news.common.feature.BaseViewModel
+import pl.gmat.news.common.model.News
 import javax.inject.Inject
 
 class NewsViewModel @Inject constructor(

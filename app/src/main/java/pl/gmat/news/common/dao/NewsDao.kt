@@ -1,12 +1,12 @@
-package pl.gmat.news.feature.news.dao
+package pl.gmat.news.common.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import pl.gmat.news.feature.news.NEWS_TABLE_NAME
-import pl.gmat.news.feature.news.News
+import pl.gmat.news.common.model.NEWS_TABLE_NAME
+import pl.gmat.news.common.model.News
 
 @Dao
 interface NewsDao {
@@ -16,4 +16,7 @@ interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(news: List<News>)
+
+    @Query("SELECT * FROM $NEWS_TABLE_NAME WHERE id = :id")
+    suspend fun loadNews(id: Int): News
 }

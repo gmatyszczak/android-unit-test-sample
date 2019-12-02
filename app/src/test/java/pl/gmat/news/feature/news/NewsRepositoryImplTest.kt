@@ -52,11 +52,21 @@ class NewsRepositoryImplTest {
     }
 
     @Test
-    fun `on load news`() = runBlockingTest {
+    fun `when query empty on load news`() = runBlockingTest {
         val flow = flowOf(listOf(news))
         whenever(newsDaoMock.loadAll()).thenReturn(flow)
 
-        repository.loadNews().collect {
+        repository.loadNews("").collect {
+            assertEquals(listOf(news), it)
+        }
+    }
+
+    @Test
+    fun `when query not empty on load news`() = runBlockingTest {
+        val flow = flowOf(listOf(news))
+        whenever(newsDaoMock.search("test")).thenReturn(flow)
+
+        repository.loadNews("test").collect {
             assertEquals(listOf(news), it)
         }
     }

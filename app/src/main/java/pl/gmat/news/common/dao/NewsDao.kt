@@ -16,4 +16,7 @@ interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(news: List<News>)
+
+    @Query("SELECT * FROM $NEWS_TABLE_NAME WHERE title LIKE '%' || :query || '%'")
+    fun search(query: String): Flow<List<News>>
 }

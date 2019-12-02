@@ -2,5 +2,8 @@
     <string name="app_name">News</string>
 
     <string name="news_refresh_error_message">Refresh failed!</string>
+    <string name="news_search_hint">Search news…</string>
+    <string name="news_no_news">No news found!</string>
+
     <string name="news_details_comments">Comments:</string>
 </resources>

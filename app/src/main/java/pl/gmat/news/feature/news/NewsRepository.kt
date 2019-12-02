@@ -10,14 +10,20 @@ import javax.inject.Inject
 
 interface NewsRepository {
 
+    fun loadNews(query: String): Flow<List<News>>
     suspend fun refreshNews(): Result<List<News>>
-    fun loadNews(): Flow<List<News>>
 }
 
 class NewsRepositoryImpl @Inject constructor(
     private val newsService: NewsService,
     private val newsDao: NewsDao
 ) : NewsRepository {
+
+    override fun loadNews(query: String) = if (query.isEmpty()) {
+        newsDao.loadAll()
+    } else {
+        newsDao.search(query)
+    }
 
     override suspend fun refreshNews(): Result<List<News>> {
         val result = apiCall { newsService.loadAllNews() }
@@ -26,6 +32,4 @@ class NewsRepositoryImpl @Inject constructor(
         }
         return result
     }
-
-    override fun loadNews() = newsDao.loadAll()
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -22,6 +23,7 @@ import pl.gmat.news.common.Result
 import pl.gmat.news.feature.testError
 import pl.gmat.news.feature.testNews
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class NewsViewModelTest {
@@ -46,7 +48,7 @@ class NewsViewModelTest {
     @Before
     fun setup() = runBlockingTest {
         Dispatchers.setMain(testDispatcher)
-        whenever(repositoryMock.loadNews()).thenReturn(flowOf(listOf(news)))
+        whenever(repositoryMock.loadNews("")).thenReturn(flowOf(listOf(news)))
         whenever(repositoryMock.refreshNews()).thenReturn(Result.Success(listOf(news)))
         viewModel = NewsViewModel(repositoryMock)
         viewModel.state.observeForever(stateObserverMock)
@@ -104,5 +106,45 @@ class NewsViewModelTest {
         verify(effectObserverMock).onChanged(NewsEffect.ShowNewsDetails(news))
         verifyNoMoreInteractions(effectObserverMock)
         verifyNoMoreInteractions(stateObserverMock)
+    }
+
+    @Test
+    fun `when results not empty on search query changed`() {
+        whenever(repositoryMock.loadNews("test")).thenReturn(flowOf(listOf(news, news)))
+
+        viewModel.searchQueryLiveData.value = "test"
+        testDispatcher.advanceTimeBy(300)
+
+        inOrder(stateObserverMock) {
+            verify(stateObserverMock).onChanged(NewsState(news = listOf(news)))
+            verify(stateObserverMock).onChanged(
+                NewsState(
+                    news = listOf(news, news),
+                    isEmptyVisible = false
+                )
+            )
+        }
+        verifyNoMoreInteractions(stateObserverMock)
+        verifyZeroInteractions(effectObserverMock)
+    }
+
+    @Test
+    fun `when results empty on search query changed`() {
+        whenever(repositoryMock.loadNews("test")).thenReturn(flowOf(emptyList()))
+
+        viewModel.searchQueryLiveData.value = "test"
+        testDispatcher.advanceTimeBy(300)
+
+        inOrder(stateObserverMock) {
+            verify(stateObserverMock).onChanged(NewsState(news = listOf(news)))
+            verify(stateObserverMock).onChanged(
+                NewsState(
+                    news = emptyList(),
+                    isEmptyVisible = true
+                )
+            )
+        }
+        verifyNoMoreInteractions(stateObserverMock)
+        verifyZeroInteractions(effectObserverMock)
     }
 }

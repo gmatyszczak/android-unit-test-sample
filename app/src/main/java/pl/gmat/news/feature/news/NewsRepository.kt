@@ -19,14 +19,13 @@ class NewsRepositoryImpl @Inject constructor(
     private val newsDao: NewsDao
 ) : NewsRepository {
 
-    override suspend fun refreshNews() =
-        when (val result = apiCall { newsService.loadAllNews() }) {
-            is Result.Success<List<News>> -> {
-                newsDao.insert(result.data)
-                result
-            }
-            is Result.Failure -> result
+    override suspend fun refreshNews(): Result<List<News>> {
+        val result = apiCall { newsService.loadAllNews() }
+        if (result is Result.Success<List<News>>) {
+            newsDao.insert(result.data)
         }
+        return result
+    }
 
     override fun loadNews() = newsDao.loadAll()
 }

@@ -1,6 +1,8 @@
 package pl.gmat.news.feature.news
 
-sealed class NewsEffect
+sealed class NewsEffect {
+    object ShowError : NewsEffect()
+}
 
 
 

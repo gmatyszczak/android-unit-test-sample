@@ -31,7 +31,9 @@ class NewsActivity : BaseActivity<ActivityNewsBinding, NewsState, NewsEffect, Ne
     override fun inject(appComponent: AppComponent) =
         appComponent.newsComponentFactory().create(this).inject(this)
 
-    override fun handleEffect(effect: NewsEffect) = Unit
+    override fun handleEffect(effect: NewsEffect) = when(effect) {
+        is NewsEffect.ShowError -> showErrorSnackBar()
+    }
 
     private fun showErrorSnackBar() {
         binding?.let {

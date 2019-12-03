@@ -73,6 +73,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:text="@string/news_no_news"
+            android:visibility="gone"
             android:textAppearance="?textAppearanceBody2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

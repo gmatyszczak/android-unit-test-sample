@@ -16,8 +16,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="?listPreferredItemHeight"
-        android:background="?selectableItemBackground"
-        android:onClick="@{() -> viewModel.onNewsClicked(news)}">
+        android:background="?selectableItemBackground">
+<!--        android:onClick="@{() -> viewModel.onNewsClicked(news)}"-->
 
         <TextView
             android:textAppearance="?textAppearanceSubtitle2"

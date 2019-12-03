@@ -45,9 +45,9 @@
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp"
-                android:paddingBottom="8dp"
-                android:text="@={viewModel.searchQueryLiveData}" />
+                android:paddingBottom="8dp"  />
 
+<!--                android:text="@={viewModel.searchQueryLiveData}"-->
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -56,10 +56,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:onRefreshListener="@{() -> viewModel.onNewsRefresh()}"
-            app:refreshing="@{state.isLoading}">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
+<!--            app:refreshing="@{state.isLoading}"-->
+<!--            app:onRefreshListener="@{() -> viewModel.onNewsRefresh()}"-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/newsRecyclerView"
                 android:layout_width="match_parent"
@@ -74,10 +74,11 @@
             android:gravity="center"
             android:text="@string/news_no_news"
             android:textAppearance="?textAppearanceBody2"
-            android:visibility="@{state.emptyVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+<!--            android:visibility="@{state.emptyVisible ? View.VISIBLE : View.GONE}"-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

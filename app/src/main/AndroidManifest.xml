@@ -26,6 +26,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".feature.details.NewsDetailsActivity" />
+        <activity android:name=".feature.details_final.NewsDetailsActivity" />
     </application>
 </manifest>

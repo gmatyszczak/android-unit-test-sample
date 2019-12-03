@@ -7,8 +7,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import pl.gmat.news.di.AppComponent
-import pl.gmat.news.di.Injector
+import pl.gmat.news.common.di.AppComponent
+import pl.gmat.news.common.di.Injector
 import javax.inject.Inject
 import javax.inject.Provider
 

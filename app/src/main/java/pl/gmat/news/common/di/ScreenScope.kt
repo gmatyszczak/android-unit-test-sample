@@ -1,4 +1,4 @@
-package pl.gmat.news.di
+package pl.gmat.news.common.di
 
 import javax.inject.Scope
 

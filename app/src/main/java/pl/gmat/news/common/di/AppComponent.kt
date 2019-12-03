@@ -1,12 +1,13 @@
-package pl.gmat.news.di
+package pl.gmat.news.common.di
 
 import dagger.BindsInstance
 import dagger.Component
+import kotlinx.coroutines.FlowPreview
 import pl.gmat.news.NewsApp
-import pl.gmat.news.feature.details.di.NewsDetailsComponent
 import pl.gmat.news.feature.news.di.NewsComponent
 import javax.inject.Singleton
 
+@FlowPreview
 @Singleton
 @Component(
     modules = [
@@ -23,5 +24,5 @@ interface AppComponent {
     fun inject(application: NewsApp)
 
     fun newsComponentFactory(): NewsComponent.Factory
-    fun newsDetailsComponentFactory(): NewsDetailsComponent.Factory
+//    fun newsDetailsComponentFactory(): NewsDetailsComponent.Factory
 }

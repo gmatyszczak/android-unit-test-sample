@@ -1,4 +1,4 @@
-package pl.gmat.news.di
+package pl.gmat.news.common.di
 
 import androidx.room.Room
 import com.squareup.moshi.Moshi
@@ -6,7 +6,8 @@ import dagger.Module
 import dagger.Provides
 import pl.gmat.news.NewsApp
 import pl.gmat.news.common.api.NewsService
-import pl.gmat.news.database.AppDatabase
+import pl.gmat.news.common.dao.NewsDao
+import pl.gmat.news.common.dao.AppDatabase
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -31,4 +32,9 @@ class AppModule {
     @Singleton
     fun provideNewsService(retrofit: Retrofit): NewsService =
         retrofit.create(NewsService::class.java)
+
+
+    @Singleton
+    @Provides
+    fun provideNewsDao(database: AppDatabase): NewsDao = database.newsDao()
 }

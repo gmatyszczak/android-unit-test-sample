@@ -1,4 +1,4 @@
-package pl.gmat.news.database
+package pl.gmat.news.common.dao
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

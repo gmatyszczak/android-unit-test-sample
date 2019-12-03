@@ -1,7 +1,7 @@
 package pl.gmat.news
 
 import android.app.Application
-import pl.gmat.news.di.Injector
+import pl.gmat.news.common.di.Injector
 
 class NewsApp : Application() {
 
